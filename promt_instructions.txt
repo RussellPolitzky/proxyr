@@ -1,0 +1,41 @@
+Build an R plugin to handle proxy servers.  The package should contain a
+function called with_proxy().
+
+The function is invoked as follows:
+
+    with_proxy({
+        # Do things that need the proxy to be active here.
+        # When this code runs the assigned proxy is active.
+        # When this code exits the assigned proxy is no longer active.
+    }
+
+The function should set the proxy for the R session to the proxy server specified by the user.
+If should also include a URL encoded username and password if the proxy requires authentication.
+The proxy must be set using environment variables.
+
+The with_proxy function should also include a try finally block to ensure that 
+proxy settings are restored to their original state even if an error occurs.
+
+The with proxy function does not take a URL because it only sets the proxy environment variables.  
+Code code within its scope will make the URL calls.
+
+Any code called within the scope of with_proxy() should use the proxy settings specified by the user.
+
+The function must store any ambient proxy settings before execution and should restore them
+after execution to ensure that the proxy settings are not changed.
+
+The proxy username and password should be stored in the windows credential manager using the 
+keyring package in R.
+
+The package must allow users to capture the proxy details and store them in the windows credential manager.
+
+The package must allow users to remove the proxy details from the windows credential manager.
+
+The package must allow users to list the proxy details stored in the windows credential manager.
+
+The package must include appropriate tests using the testhat package.  The tests must be run using the testthat package
+and should use an open proxy server to test the functionality.
+
+The package must be built using the devtools package in R. It should be built to comply with CRAN policies.
+
+Use a git repo for this project.  The git repo should be hosted on github.
