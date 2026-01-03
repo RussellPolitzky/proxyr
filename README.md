@@ -22,6 +22,20 @@ with_proxy({
 }, proxy_url = "http://my.proxy.com:8080")
 ```
 
+### Default Configuration
+
+You can set a default proxy URL to avoid passing it every time.
+
+```r
+# Set the default proxy URL
+set_default_proxy_url("http://my.proxy.com:8080")
+
+# Now call with_proxy without arguments
+with_proxy({
+  # ...
+})
+```
+
 ### Credential Management
 
 You can store proxy credentials securely using the Windows Credential Manager (via the `keyring` package).

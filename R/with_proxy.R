@@ -4,11 +4,21 @@
 #'
 #' @param expr The code to execute.
 #' @param proxy_url The URL of the proxy server (e.g., "http://proxy.example.com:8080").
+#'   Defaults to \code{\link{get_default_proxy_url}()}.
 #' @param username Optional. The username for the proxy. If not provided, attempts to retrieve from credentials.
 #' @param password Optional. The password for the proxy. If not provided, attempts to retrieve from credentials.
 #'
 #' @export
-with_proxy <- function(expr, proxy_url, username = NULL, password = NULL) {
+with_proxy <- function(
+    expr,
+    proxy_url = get_default_proxy_url(),
+    username = NULL,
+    password = NULL
+) {
+    if (is.null(proxy_url)) {
+        stop("proxy_url must be provided or set via set_default_proxy_url()")
+    }
+
     # 1. Capture current ambient proxy settings
     old_http <- Sys.getenv("http_proxy", unset = NA)
     old_https <- Sys.getenv("https_proxy", unset = NA)

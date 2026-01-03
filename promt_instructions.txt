@@ -13,6 +13,9 @@ The function should set the proxy for the R session to the proxy server specifie
 If should also include a URL encoded username and password if the proxy requires authentication.
 The proxy must be set using environment variables.
 
+I don't want to have to set the proxy URL in each call.  
+Please enhance the code so that this can be stored configuration instead.
+
 The with_proxy function should also include a try finally block to ensure that 
 proxy settings are restored to their original state even if an error occurs.
 

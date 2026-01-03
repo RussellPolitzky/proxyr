@@ -4,12 +4,18 @@
 \alias{with_proxy}
 \title{Execute Code with a Proxy}
 \usage{
-with_proxy(expr, proxy_url, username = NULL, password = NULL)
+with_proxy(
+  expr,
+  proxy_url = get_default_proxy_url(),
+  username = NULL,
+  password = NULL
+)
 }
 \arguments{
 \item{expr}{The code to execute.}
 
-\item{proxy_url}{The URL of the proxy server (e.g., "http://proxy.example.com:8080").}
+\item{proxy_url}{The URL of the proxy server (e.g., "http://proxy.example.com:8080").
+Defaults to \code{\link{get_default_proxy_url}()}.}
 
 \item{username}{Optional. The username for the proxy. If not provided, attempts to retrieve from credentials.}
 
