@@ -1,9 +1,10 @@
 Package: proxyr
-Title: What the Package Does (One Line, Title Case)
+Title: Proxy Configuration and Credential Management
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+    c(person("Russell", "Politzky", email = "russell.politzky@gmail.com", role = c("aut", "cre")),
+      person("Gemini", role = "aut"))
+Description: Provides tools to manage proxy settings and credentials in R. Supports temporary proxy configuration via `with_proxy`, secure credential storage using the `keyring` package, and automatic Windows system proxy detection.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
