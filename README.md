@@ -40,11 +40,13 @@ with_proxy({
 
 You can store proxy credentials securely using the Windows Credential Manager (via the `keyring` package).
 
+> **SECURITY WARNING**: Never hardcode your username and password in your scripts. Run `set_proxy_credentials` **once** interactively to store them.
+
 ```r
-# Store credentials for a proxy
+# Run ONCE in the console, do not safe in a script!
 set_proxy_credentials("http://my.proxy.com:8080", "username", "password")
 
-# Use them automatically in with_proxy
+# Use them automatically in with_proxy without revealing secrets
 with_proxy({
   # ...
 }, proxy_url = "http://my.proxy.com:8080")

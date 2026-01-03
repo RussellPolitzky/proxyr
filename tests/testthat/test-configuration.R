@@ -28,6 +28,20 @@ test_that("configuration functions work", {
     # Test env var fallback
     options(proxyr.url = NULL)
     expect_equal(get_default_proxy_url(), "http://env.proxy")
+
+    # Test system proxy fallback
+    Sys.unsetenv("PROXY_URL")
+
+    if (
+        .Platform$OS.type == "windows" &&
+            requireNamespace("curl", quietly = TRUE)
+    ) {
+        # Minimal check: ensure it runs and returns NULL or character
+        res <- get_default_proxy_url()
+        expect_true(is.null(res) || is.character(res))
+    } else {
+        expect_null(get_default_proxy_url())
+    }
 })
 
 test_that("with_proxy uses default url", {

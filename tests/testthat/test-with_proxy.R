@@ -94,3 +94,18 @@ test_that("real proxy connection works", {
         proxy_url = test_proxy
     )
 })
+
+test_that("with_proxy sets no_proxy matches", {
+    proxy <- "http://test.proxy:8080"
+    np <- "localhost,127.0.0.1"
+
+    with_proxy(
+        {
+            expect_equal(Sys.getenv("http_proxy"), proxy)
+            expect_equal(Sys.getenv("no_proxy"), np)
+            expect_equal(Sys.getenv("NO_PROXY"), np)
+        },
+        proxy_url = proxy,
+        no_proxy = np
+    )
+})

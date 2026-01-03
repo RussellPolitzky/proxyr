@@ -13,6 +13,10 @@ The default proxy URL, or NULL if not set.
 Retrieves the default proxy URL. Checks the R option \code{proxyr.url} first,
 then the \code{PROXY_URL} environment variable.
 }
+\details{
+On Windows, if no configuration is found, it attempts to retrieve the
+system proxy settings using \code{curl::ie_get_proxy_for_url}.
+}
 \examples{
 get_default_proxy_url()
 }

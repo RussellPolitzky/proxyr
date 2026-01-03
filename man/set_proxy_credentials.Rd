@@ -18,8 +18,18 @@ This is used as the service name in keyring.}
 Stores the username and password for a specific proxy server in the Windows
 Credential Manager using the keyring package.
 }
+\section{Security Warning}{
+
+You should \strong{never} hardcode your username and password in your R scripts
+or commit them to version control. This function is intended to be run
+\strong{once} interactively to store your credentials securely in the Windows
+Credential Manager. Once stored, you do not need to run this function again
+unless your credentials change.
+}
+
 \examples{
 \dontrun{
+# Run this ONCE interactively, do not include in your scripts:
 set_proxy_credentials("http://my.proxy.com:8080", "myuser", "mypass")
 }
 }

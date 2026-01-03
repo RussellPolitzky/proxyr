@@ -1,0 +1,108 @@
+---
+title: "Introduction to proxyr"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to proxyr}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+The `proxyr` package makes it easy to work with proxy servers in R. It allows you to:
+
+*   Execute code blocks with temporary proxy settings.
+*   Manage proxy credentials securely using Windows Credential Manager.
+*   Configure a default proxy URL.
+
+## Setup
+
+First, install and load the package:
+
+```r
+library(proxyr)
+```
+
+## Basic Usage
+
+The core function is `with_proxy()`. It sets the `http_proxy` and `https_proxy` environment variables only for the duration of the code block.
+
+```r
+# Define your proxy URL
+my_proxy <- "http://proxy.example.com:8080"
+
+# Run code using the proxy
+with_proxy({
+  # This code runs with the proxy set
+  print(Sys.getenv("http_proxy"))
+}, proxy_url = my_proxy)
+
+# Outside the block, the proxy is unset (or restored to previous value)
+print(Sys.getenv("http_proxy"))
+```
+
+## Configuration
+
+You can set a default proxy URL so you don't have to repeat it.
+
+```r
+set_default_proxy_url("http://proxy.example.com:8080")
+
+# Now you can omit the proxy_url argument
+with_proxy({
+  # Uses the default proxy
+})
+```
+
+## Authentication
+
+If your proxy requires a username and password, `proxyr` integrates with the `keyring` package to store them securely.
+
+**Step 1: Store Credentials**
+
+**Step 1: Store Credentials**
+
+Use `set_proxy_credentials` to save your username and password. This stores them in the Windows Credential Manager.
+
+> **Important**: You should run this function **once** interactively in your console. **Do not** write this line in your scripts or share code containing your password.
+
+```r
+# Run this interactively in the console
+set_proxy_credentials(
+  proxy_url = "http://proxy.example.com:8080",
+  username = "myuser",
+  password = "mypassword"
+)
+```
+
+**Step 2: Use Automatically**
+
+When you run `with_proxy()`, it automatically looks up credentials for the given URL.
+
+```r
+with_proxy({
+  # The proxy environment variable will automatically include user:pass
+  # e.g., http://myuser:mypassword@proxy.example.com:8080
+})
+```
+
+## Security Note
+
+For security reasons, you cannot retrieve the raw password programmatically using `proxyr`'s public functions. While `with_proxy` handles authentication internally, the `get_proxy_credentials` function is not available to end users to prevent accidental exposure of secrets.
+
+## Managing Credentials
+
+You can list or remove credentials if needed:
+
+```r
+# List stored credentials
+list_proxy_credentials()
+
+# Remove credentials for a specific proxy
+remove_proxy_credentials("http://proxy.example.com:8080")
+```

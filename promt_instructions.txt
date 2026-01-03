@@ -1,46 +1,40 @@
-Build an R plugin to handle proxy servers.  The package should contain a
-function called with_proxy().
+# Proxyr Package Requirements
 
-The function is invoked as follows:
+## Core Functionality
 
-    with_proxy({
-        # Do things that need the proxy to be active here.
-        # When this code runs the assigned proxy is active.
-        # When this code exits the assigned proxy is no longer active.
-    }
+### `with_proxy` Function
+-   **Purpose**: Execute a block of code with temporary proxy environment variables set.
+-   **Usage**: `with_proxy({ ... })`
+-   **Scope**:
+    -   Sets `http_proxy` and `https_proxy` environment variables for the R session while the code block runs.
+    -   Restores ambient proxy settings (or unsets them) immediately after execution.
+    -   **Robustness**: Must use a `try-finally` (e.g., `on.exit`) approach to ensure restoration even if errors occur.
+-   **Configuration**:
+    -   Should support a default proxy URL configuration to avoid repeating arguments.
+    -   **Windows Fallback**: If running on Windows and no proxy is configured, it should automatically use the Windows system proxy settings.
 
-The function should set the proxy for the R session to the proxy server specified by the user.
-If should also include a URL encoded username and password if the proxy requires authentication.
-The proxy must be set using environment variables.
+## Credential Management
 
-I don't want to have to set the proxy URL in each call.  
-Please enhance the code so that this can be stored configuration instead.
+-   **Storage**: Store proxy username and password in the Windows Credential Manager using the `keyring` package.
+-   **Functions**:
+    -   Allow users to capture (set) proxy details.
+    -   Allow users to remove proxy details.
+    -   Allow users to list stored proxy details.
+-   **Integration**: `with_proxy` should automatically retrieve and URL-encode credentials for the target proxy if authentication is required.
+-   **Security**: The function to retrieve credentials (`get_proxy_credentials`) must NOT be accessible to the end user (internal only) to minimize security risks.
 
-The with_proxy function should also include a try finally block to ensure that 
-proxy settings are restored to their original state even if an error occurs.
+## Documentation
 
-The with proxy function does not take a URL because it only sets the proxy environment variables.  
-Code code within its scope will make the URL calls.
+-   **Roxygen**: All functions must have usage examples in their documentation.
+-   **Vignette**: A vignette explaining package usage with simple examples must be included.
+-   **Format**: Generate PDF reference documentation and an HTML vignette.
 
-Any code called within the scope of with_proxy() should use the proxy settings specified by the user.
+## Quality Assurance & Build
 
-The function must store any ambient proxy settings before execution and should restore them
-after execution to ensure that the proxy settings are not changed.
-
-The proxy username and password should be stored in the windows credential manager using the 
-keyring package in R.
-
-The package must allow users to capture the proxy details and store them in the windows credential manager.
-
-The package must allow users to remove the proxy details from the windows credential manager.
-
-The package must allow users to list the proxy details stored in the windows credential manager.
-
-The package must include appropriate tests using the testhat package.  The tests must be run using the testthat package
-and should use an open proxy server to test the functionality.
-
-The package must be built using the devtools package in R. It should be built to comply with CRAN policies.
-
-Use a git repo for this project.  The git repo should be hosted on github.
-
-Ensure that all function calls have examples in the roxygen documentation please.
+-   **Testing**:
+    -   Use `testthat` for unit tests.
+    -   Include tests using an open proxy server (where feasible) or mocks.
+-   **Build**:
+    -   Build using `devtools`.
+    -   Must comply with CRAN policies.
+-   **Version Control**: Hosted in a Git repository (GitHub).

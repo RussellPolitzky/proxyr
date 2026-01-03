@@ -8,8 +8,16 @@
 #' @param username The username for the proxy.
 #' @param password The password for the proxy.
 #'
+#' @section Security Warning:
+#' You should \strong{never} hardcode your username and password in your R scripts
+#' or commit them to version control. This function is intended to be run
+#' \strong{once} interactively to store your credentials securely in the Windows
+#' Credential Manager. Once stored, you do not need to run this function again
+#' unless your credentials change.
+#'
 #' @examples
 #' \dontrun{
+#' # Run this ONCE interactively, do not include in your scripts:
 #' set_proxy_credentials("http://my.proxy.com:8080", "myuser", "mypass")
 #' }
 #' @export
@@ -17,6 +25,7 @@ set_proxy_credentials <- function(proxy_url, username, password) {
   if (missing(proxy_url) || missing(username) || missing(password)) {
     stop("proxy_url, username, and password are required.")
   }
+  proxy_url <- normalize_proxy_url(proxy_url)
   keyring::key_set_with_value(
     service = proxy_url,
     username = username,
@@ -32,12 +41,9 @@ set_proxy_credentials <- function(proxy_url, username, password) {
 #' @param proxy_url The URL of the proxy server.
 #'
 #' @return A list containing `username` and `password`, or NULL if not found.
-#' @examples
-#' \dontrun{
-#' get_proxy_credentials("http://my.proxy.com:8080")
-#' }
-#' @export
+#' @keywords internal
 get_proxy_credentials <- function(proxy_url) {
+  proxy_url <- normalize_proxy_url(proxy_url)
   # keyring::key_list returns specific service/user pairs.
   # We assume one user per proxy for simplicity or find the first one.
   keys <- keyring::key_list(service = proxy_url)
@@ -66,6 +72,7 @@ get_proxy_credentials <- function(proxy_url) {
 #' }
 #' @export
 remove_proxy_credentials <- function(proxy_url) {
+  proxy_url <- normalize_proxy_url(proxy_url)
   keys <- keyring::key_list(service = proxy_url)
   if (nrow(keys) == 0) {
     message("No credentials found for ", proxy_url)
