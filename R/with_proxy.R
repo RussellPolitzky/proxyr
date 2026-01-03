@@ -8,6 +8,16 @@
 #' @param username Optional. The username for the proxy. If not provided, attempts to retrieve from credentials.
 #' @param password Optional. The password for the proxy. If not provided, attempts to retrieve from credentials.
 #'
+#' @examples
+#' \dontrun{
+#' set_default_proxy_url("http://my.proxy:8080")
+#' set_proxy_credentials("http://my.proxy:8080", "user", "pass")
+#'
+#' with_proxy({
+#'   # Code that requires proxy
+#'   Sys.getenv("http_proxy")
+#' })
+#' }
 #' @export
 with_proxy <- function(
     expr,

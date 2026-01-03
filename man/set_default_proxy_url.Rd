@@ -12,3 +12,8 @@ set_default_proxy_url(proxy_url)
 \description{
 Sets the default proxy URL to be used by \code{\link{with_proxy}}.
 }
+\examples{
+\dontrun{
+set_default_proxy_url("http://proxy.example.com:8080")
+}
+}

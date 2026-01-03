@@ -42,3 +42,5 @@ and should use an open proxy server to test the functionality.
 The package must be built using the devtools package in R. It should be built to comply with CRAN policies.
 
 Use a git repo for this project.  The git repo should be hosted on github.
+
+Ensure that all function calls have examples in the roxygen documentation please.

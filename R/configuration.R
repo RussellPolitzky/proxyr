@@ -4,6 +4,10 @@
 #'
 #' @param proxy_url The URL of the proxy server (e.g., "http://proxy.example.com:8080").
 #'
+#' @examples
+#' \dontrun{
+#' set_default_proxy_url("http://proxy.example.com:8080")
+#' }
 #' @export
 set_default_proxy_url <- function(proxy_url) {
     options(proxyr.url = proxy_url)
@@ -16,6 +20,8 @@ set_default_proxy_url <- function(proxy_url) {
 #' then the `PROXY_URL` environment variable.
 #'
 #' @return The default proxy URL, or NULL if not set.
+#' @examples
+#' get_default_proxy_url()
 #' @export
 get_default_proxy_url <- function() {
     url <- getOption("proxyr.url")

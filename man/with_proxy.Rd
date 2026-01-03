@@ -24,3 +24,14 @@ Defaults to \code{\link{get_default_proxy_url}()}.}
 \description{
 Sets the proxy environment variables for the duration of the expression.
 }
+\examples{
+\dontrun{
+set_default_proxy_url("http://my.proxy:8080")
+set_proxy_credentials("http://my.proxy:8080", "user", "pass")
+
+with_proxy({
+  # Code that requires proxy
+  Sys.getenv("http_proxy")
+})
+}
+}

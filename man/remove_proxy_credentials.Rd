@@ -12,3 +12,8 @@ remove_proxy_credentials(proxy_url)
 \description{
 Removes the stored credentials for a specific proxy server.
 }
+\examples{
+\dontrun{
+remove_proxy_credentials("http://my.proxy.com:8080")
+}
+}

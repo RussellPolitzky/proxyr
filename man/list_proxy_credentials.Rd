@@ -17,3 +17,8 @@ Since keyring stores by service name, this lists all services, or we relies on u
 Note: This function lists ALL keys in the keyring if we don't filter.
 To make this safer, we might only list those that look like urls or just wrap key_list.
 }
+\examples{
+\dontrun{
+list_proxy_credentials()
+}
+}

@@ -18,3 +18,8 @@ This is used as the service name in keyring.}
 Stores the username and password for a specific proxy server in the Windows
 Credential Manager using the keyring package.
 }
+\examples{
+\dontrun{
+set_proxy_credentials("http://my.proxy.com:8080", "myuser", "mypass")
+}
+}

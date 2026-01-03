@@ -15,3 +15,8 @@ A list containing \code{username} and \code{password}, or NULL if not found.
 \description{
 Retrieves the credentials for a specific proxy server.
 }
+\examples{
+\dontrun{
+get_proxy_credentials("http://my.proxy.com:8080")
+}
+}

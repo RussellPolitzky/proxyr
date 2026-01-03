@@ -13,3 +13,6 @@ The default proxy URL, or NULL if not set.
 Retrieves the default proxy URL. Checks the R option \code{proxyr.url} first,
 then the \code{PROXY_URL} environment variable.
 }
+\examples{
+get_default_proxy_url()
+}
