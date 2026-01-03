@@ -23,6 +23,10 @@
 -   **Integration**: `with_proxy` should automatically retrieve and URL-encode credentials for the target proxy if authentication is required.
 -   **Security**: The function to retrieve credentials (`get_proxy_credentials`) must NOT be accessible to the end user (internal only) to minimize security risks.
 
+## Security
+
+-   **Security**: The function to retrieve credentials (`get_proxy_credentials`) must NOT be accessible to the end user (internal only) to minimize security risks.
+
 ## Documentation
 
 -   **Roxygen**: All functions must have usage examples in their documentation.
@@ -38,3 +42,8 @@
     -   Build using `devtools`.
     -   Must comply with CRAN policies.
 -   **Version Control**: Hosted in a Git repository (GitHub).
+
+## Authors
+
+The authors of this package are Russell Politzky and Gemini.  Russell's e-mail 
+address is russell.politzky@gmail.com
