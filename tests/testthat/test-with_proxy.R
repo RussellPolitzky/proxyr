@@ -110,7 +110,6 @@ test_that("with_proxy sets no_proxy matches", {
     )
 })
 
-
 testthat::test_that('with_proxy should be able to get example html page with default proxy and creds in place', {
     
     # get the system default proxy
@@ -134,6 +133,39 @@ testthat::test_that('with_proxy should be able to get example html page with def
             if (requireNamespace("curl", quietly = TRUE)) {
                 try(
                     curl::curl_fetch_memory("http://www.example.com"),
+                    silent = TRUE
+                )
+            }
+        })
+    
+    expect_equal(req$status_code, 200) # Should succeed in getting example.com page.
+
+})
+
+
+testthat::test_that('with_proxy should be able to get google font file', {
+    
+    # get the system default proxy
+    proxy_url <- get_default_proxy_url()
+
+    if (is.null(proxy_url)) {
+        skip("Skipping since no system default proxy.")
+    }
+
+    creds <- proxyr:::get_proxy_credentials(proxy_url)
+
+    if (is.null(creds)) {
+        skip("Skipping since no proxy creds are persent and we assume they're needed or this test.  Please capture them before running this test.")
+    }
+
+    req <- 
+        with_proxy({
+            # Simple check: can we verify our IP or headers through the proxy?
+            # This depends on the proxy type.
+            # For now, just ensure no error on a simple request (if curl/httr installed)
+            if (requireNamespace("curl", quietly = TRUE)) {
+                try(
+                    curl::curl_fetch_memory("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"),
                     silent = TRUE
                 )
             }
